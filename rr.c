@@ -158,7 +158,6 @@ int main(int argc, char *argv[])
   u32 total_response_time = 0;
 
   int timer = 0;
-  int end_time = 0;
   while (true){
     //implement a round robin scheduler
     for (int i = 0; i < size; i++){
