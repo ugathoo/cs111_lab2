@@ -158,6 +158,7 @@ int main(int argc, char *argv[])
   u32 total_response_time = 0;
 
   int timer = 0;
+  int num_processes = size;
   while (true){
     //implement a round robin scheduler
     for (int i = 0; i < size; i++){
@@ -167,18 +168,21 @@ int main(int argc, char *argv[])
     }
     struct process *current = TAILQ_FIRST(&list);
     TAILQ_REMOVE(&list, current, pointers);
+    num_processes--;
 
     if (current->burst_time > quantum_length){
       timer += quantum_length;
       current->burst_time -= quantum_length;
       TAILQ_INSERT_TAIL(&list, current, pointers);
+      num_processes++;
     } else {
       timer += current->burst_time;
       total_waiting_time += timer - current->arrival_time - current->burst_time;
       total_response_time += timer - current->arrival_time;
+      num_processes--;
     }
 
-    if (TAILQ_EMPTY(&list)){
+    if (TAILQ_EMPTY(&list) && num_processes == 0){
       break;
     }
   }
