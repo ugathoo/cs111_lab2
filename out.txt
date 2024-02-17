@@ -1,0 +1,32 @@
+0
+timer hits proc 0
+2
+timer hits proc 0
+curr proc response time 0
+timer 3
+num proc 4
+4
+timer hits proc 3
+5
+timer hits proc 3
+curr proc response time 1
+timer 6
+num proc 4
+timer 9
+num proc 4
+curr proc response time 5
+timer 10
+curr proc wait time 5
+tot wait 5
+avg wait 1.25
+num proc 2
+curr proc response time 5
+timer 13
+num proc 2
+timer 14
+curr proc wait time 11
+tot wait 16
+avg wait 4.00
+num proc 0
+Average waiting time: 4.00
+Average response time: 2.75
