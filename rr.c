@@ -189,6 +189,7 @@ int main(int argc, char *argv[])
       num_processes++;
       printf("num proc %d\n",num_processes);
     } else {
+      printf("pid %d\n",current->pid);
       timer += current->burst_time;
       printf("timer %d\n",timer);
       int a = timer - current->arrival_time - current->burst_time;
