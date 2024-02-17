@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
   while (true){
     //implement a round robin scheduler
     for (int i = 0; i < size; i++){
-      if (data[i].arrival_time == timer){
+      if (data[i].arrival_time > 0 && data[i].arrival_time <= timer && data[i].arrival_time > (timer - quantum_length)){
         TAILQ_INSERT_TAIL(&list, &data[i], pointers);
         printf("%d\n",data[i].arrival_time);
         printf("timer hits proc %d\n",timer);
