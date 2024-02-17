@@ -165,6 +165,7 @@ int main(int argc, char *argv[])
       if (data[i].arrival_time == timer){
         TAILQ_INSERT_TAIL(&list, &data[i], pointers);
         printf("%d\n",data[i].arrival_time);
+        printf("timer hits proc %d\n",timer);
       }
      
     }
