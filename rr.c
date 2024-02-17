@@ -17,12 +17,8 @@ struct process
   u32 pid;
   u32 arrival_time;
   u32 burst_time;
-
+  bool hit;
   TAILQ_ENTRY(process) pointers;
-
-  /* Additional fields here */
-  bool hit = false;
-  /* End of "Additional fields here" */
 };
 
 TAILQ_HEAD(process_list, process); //head of linked list
@@ -158,6 +154,10 @@ int main(int argc, char *argv[])
   u32 total_waiting_time = 0;
   u32 total_response_time = 0;
 
+  for(int i = 0; i < size; i++){
+    data[i].hit = false;
+  }
+  
   int timer = 0;
   int num_processes = size;
   while (true){
