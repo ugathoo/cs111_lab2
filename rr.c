@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
 
   for(int i = 0; i < size; i++){
     data[i].hit = false;
-    data[i].net = data[i].arrival_time - data[i].burst_time;
+    data[i].net = data[i].arrival_time + data[i].burst_time;
   }
 
   int timer = 0;
