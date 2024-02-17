@@ -157,29 +157,31 @@ int main(int argc, char *argv[])
   for(int i = 0; i < size; i++){
     data[i].hit = false;
   }
-  
+
   int timer = 0;
   int num_processes = size;
   while (true){
     //implement a round robin scheduler
     for (int i = 0; i < size; i++){
       if (data[i].arrival_time < (timer + quantum_length)&& data[i].arrival_time >= timer ){
-        TAILQ_INSERT_TAIL(&list, &data[i], pointers);
-        printf("%d\n",data[i].arrival_time);
         printf("timer hits proc %d\n",timer);
+        TAILQ_INSERT_TAIL(&list, &data[i], pointers);
+        printf("proc arrives at %d\n",data[i].arrival_time);
       }
      
     }
+    printf("num proc %d\n",num_processes);
     struct process *current = TAILQ_FIRST(&list);
     TAILQ_REMOVE(&list, current, pointers);
     num_processes--;
+    printf("num proc %d\n",num_processes);
     if(current->hit == false){
       total_response_time += (timer - current->arrival_time);
-      printf("curr proc response time %d\n",timer - current->arrival_time);
       current->hit = true;
     }
 
     if (current->burst_time > quantum_length){
+      printf("pid %d\n",current->pid);
       timer += quantum_length;
       printf("timer %d\n",timer);
       current->burst_time -= quantum_length;
@@ -206,8 +208,7 @@ int main(int argc, char *argv[])
   /* End of "Your code here" */
 
   printf("Average waiting time: %.2f\n", (float)total_waiting_time / (float)size);
-  printf("Average response time: %.2f\n", (float)total_response_time / (float)size);
-
+  printf("Average response time: %.2f\n", (float)total_response_time / (float)size); //WORKING!
   free(data);
   return 0;
 }
