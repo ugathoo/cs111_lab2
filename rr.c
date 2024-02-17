@@ -18,6 +18,7 @@ struct process
   u32 arrival_time;
   u32 burst_time;
   bool hit;
+  u32 net;
   TAILQ_ENTRY(process) pointers;
 };
 
@@ -156,6 +157,7 @@ int main(int argc, char *argv[])
 
   for(int i = 0; i < size; i++){
     data[i].hit = false;
+    data[i].net = data[i].arrival_time - data[i].burst_time;
   }
 
   int timer = 0;
@@ -190,9 +192,9 @@ int main(int argc, char *argv[])
       printf("pid %d\n",current->pid);
       timer += current->burst_time;
       printf("timer %d\n",timer);
-      int a = timer - current->arrival_time - current->burst_time;
+      int a = timer - current->net;
       printf("curr proc wait time %d\n",a);
-      total_waiting_time += (timer - current->arrival_time - current->burst_time);
+      total_waiting_time += (timer - current->net);
       printf("tot wait %d\n",total_waiting_time);
       printf("avg wait %.2f\n", (float)total_waiting_time / (float)size);
       num_processes--;
