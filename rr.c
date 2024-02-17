@@ -21,6 +21,7 @@ struct process
   TAILQ_ENTRY(process) pointers;
 
   /* Additional fields here */
+  bool hit = false;
   /* End of "Additional fields here" */
 };
 
@@ -172,6 +173,11 @@ int main(int argc, char *argv[])
     struct process *current = TAILQ_FIRST(&list);
     TAILQ_REMOVE(&list, current, pointers);
     num_processes--;
+    if(current->hit == false){
+      total_response_time += (timer - current->arrival_time);
+      printf("curr proc response time %d\n",timer - current->arrival_time);
+      current->hit = true;
+    }
 
     if (current->burst_time > quantum_length){
       timer += quantum_length;
@@ -183,12 +189,11 @@ int main(int argc, char *argv[])
     } else {
       timer += current->burst_time;
       printf("timer %d\n",timer);
+      int a = timer - current->arrival_time - current->burst_time;
+      printf("curr proc wait time %d\n",a);
       total_waiting_time += (timer - current->arrival_time - current->burst_time);
       printf("tot wait %d\n",total_waiting_time);
       printf("avg wait %.2f\n", (float)total_waiting_time / (float)size);
-      total_response_time += (timer - current->arrival_time);
-      printf("avg resp %.2f\n", (float)total_response_time / (float)size);
-      printf("tot resp %d\n",total_response_time);
       num_processes--;
       printf("num proc %d\n",num_processes);
     }
