@@ -194,7 +194,6 @@ int main(int argc, char *argv[])
       int a = timer - current->net;
       printf("curr proc wait time %d\n",a);
       total_waiting_time += a;
-      num_processes--;
       printf("num_processes %d\n",num_processes);
     }
 
