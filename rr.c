@@ -186,7 +186,7 @@ int main(int argc, char *argv[])
       num_processes--;
     }
 
-    if (TAILQ_EMPTY(&list) && num_processes == 0){
+    if (num_processes == 0){
       break;
     }
   }
