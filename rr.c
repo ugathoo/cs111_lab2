@@ -185,22 +185,22 @@ int main(int argc, char *argv[])
       timer += quantum_length;
       printf("timer %d\n",timer);
       current->burst_time -= quantum_length;
-      printf("burst time %d\n",current->burst_time);
+      printf("burst time left %d\n",current->burst_time);
       TAILQ_INSERT_TAIL(&list, current, pointers);
       num_processes++;
     } else {
-      printf("pid %d\n",current->pid);
+      printf("pid %d\n completed",current->pid);
       timer += current->burst_time;
       printf("timer %d\n",timer);
       int a = timer - current->net;
       printf("curr proc wait time %d\n",a);
-      total_waiting_time += (timer - current->net);
+      total_waiting_time += a;
       printf("tot wait %d\n",total_waiting_time);
       printf("avg wait %.2f\n", (float)total_waiting_time / (float)size);
       num_processes--;
     }
 
-    if (num_processes == 0){
+    if (num_processes < 0){
       break;
     }
   }
