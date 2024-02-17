@@ -177,8 +177,12 @@ int main(int argc, char *argv[])
       num_processes++;
     } else {
       timer += current->burst_time;
-      total_waiting_time += timer - current->arrival_time - current->burst_time;
-      total_response_time += timer - current->arrival_time;
+      total_waiting_time += (timer - current->arrival_time - current->burst_time);
+      print(total_waiting_time);
+      printf("avg wait %.2f\n", (float)total_waiting_time / (float)size);
+      total_response_time += (timer - current->arrival_time);
+      printf("avg resp %.2f\n", (float)total_response_time / (float)size);
+      print(total_response_time);
       num_processes--;
     }
 
@@ -186,7 +190,6 @@ int main(int argc, char *argv[])
       break;
     }
   }
-  /* Your code here */
   
   /* End of "Your code here" */
 
