@@ -166,7 +166,7 @@ int main(int argc, char *argv[])
     //implement a round robin scheduler
     for (int i = 0; i < size; i++){
       if (data[i].arrival_time < (timer + quantum_length)&& data[i].arrival_time >= timer ){
-        printf("proc %d queued on or after %d\n",data[i].pid,timer);
+        //printf("proc %d queued on or after %d\n",data[i].pid,timer);
         TAILQ_INSERT_TAIL(&list, &data[i], pointers);
       }
      
@@ -180,21 +180,21 @@ int main(int argc, char *argv[])
     }
 
     if (current->burst_time > quantum_length){
-      printf("pid %d\n",current->pid);
+      //printf("pid %d\n",current->pid);
       timer += quantum_length;
-      printf("timer %d\n",timer);
+      //printf("timer %d\n",timer);
       current->burst_time -= quantum_length;
-      printf("burst time left %d\n",current->burst_time);
+      //printf("burst time left %d\n",current->burst_time);
       TAILQ_INSERT_TAIL(&list, current, pointers);
     } else {
-      printf("pid %d completed",current->pid);
+      //printf("pid %d completed",current->pid);
       timer += current->burst_time;
-      printf("timer %d\n",timer);
+      //printf("timer %d\n",timer);
       int a = timer - current->net;
-      printf("curr proc wait time %d\n",a);
+      //printf("curr proc wait time %d\n",a);
       total_waiting_time += a;
       num_processes--;
-      printf("num_processes %d\n",num_processes);    
+      //printf("num_processes %d\n",num_processes);    
 
     }
 
