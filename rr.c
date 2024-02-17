@@ -183,6 +183,7 @@ int main(int argc, char *argv[])
       timer += quantum_length;
       printf("timer %d\n",timer);
       current->burst_time -= quantum_length;
+      printf("burst time %d\n",current->burst_time);
       TAILQ_INSERT_TAIL(&list, current, pointers);
       num_processes++;
     } else {
