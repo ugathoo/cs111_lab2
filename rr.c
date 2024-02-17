@@ -170,11 +170,9 @@ int main(int argc, char *argv[])
       }
      
     }
-    printf("num proc %d\n",num_processes);
     struct process *current = TAILQ_FIRST(&list);
     TAILQ_REMOVE(&list, current, pointers);
     num_processes--;
-    printf("num proc %d\n",num_processes);
     if(current->hit == false){
       total_response_time += (timer - current->arrival_time);
       current->hit = true;
@@ -187,7 +185,6 @@ int main(int argc, char *argv[])
       current->burst_time -= quantum_length;
       TAILQ_INSERT_TAIL(&list, current, pointers);
       num_processes++;
-      printf("num proc %d\n",num_processes);
     } else {
       printf("pid %d\n",current->pid);
       timer += current->burst_time;
@@ -198,7 +195,6 @@ int main(int argc, char *argv[])
       printf("tot wait %d\n",total_waiting_time);
       printf("avg wait %.2f\n", (float)total_waiting_time / (float)size);
       num_processes--;
-      printf("num proc %d\n",num_processes);
     }
 
     if (num_processes == 0){
