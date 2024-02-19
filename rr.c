@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
       //printf("burst time left %d\n",current->burst_time);
  
       for(int j = 0; j < size; j++){
-          if (data[j].arrival_time == timer || data[j].arrival_time < timer){
+          if (data[j].arrival_time == timer){
             if(data[j].queued == false){
               data[j].queued = true;
               TAILQ_INSERT_TAIL(&list, &data[j], pointers);
