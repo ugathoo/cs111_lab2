@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
       total_response_time += (timer - current->arrival_time);
       current->hit = true;
     } else {
-      total_response_time += (timer - current->burst_time - current->arrival_time);
+      total_response_time += (timer - quantum_length - current->arrival_time);
     }
 
 
