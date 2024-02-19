@@ -176,10 +176,13 @@ int main(int argc, char *argv[])
     struct process *current = TAILQ_FIRST(&list);
     TAILQ_REMOVE(&list, current, pointers);
     
-    if(current->hit == false){
+    if (current->hit == false) {
       total_response_time += (timer - current->arrival_time);
       current->hit = true;
+    } else {
+      total_response_time += (timer - current->burst_time - current->arrival_time);
     }
+
 
     if (current->burst_time > quantum_length){
       timer += quantum_length;
