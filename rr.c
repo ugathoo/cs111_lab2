@@ -185,6 +185,16 @@ int main(int argc, char *argv[])
       //printf("timer %d\n",timer);
       current->burst_time -= quantum_length;
       //printf("burst time left %d\n",current->burst_time);
+      if (i != size-1){
+        for(int j = 0; j < size; j++){
+          if (data[j].arrival_time == timer || data[j].arrival_time < timer){
+            if(data[j].queue == false){
+              data[j].queue = true;
+              TAILQ_INSERT_TAIL(&list, &data[j], pointers);
+            }
+          }
+        }
+      }
       TAILQ_INSERT_TAIL(&list, current, pointers);
     } else {
       //printf("pid %d completed",current->pid);
