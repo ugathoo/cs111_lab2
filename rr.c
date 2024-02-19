@@ -179,10 +179,7 @@ int main(int argc, char *argv[])
     if (current->hit == false) {
       total_response_time += (timer - current->arrival_time);
       current->hit = true;
-    } else {
-      total_response_time += (timer - quantum_length - current->arrival_time);
-    }
-
+    } 
 
     if (current->burst_time > quantum_length){
       timer += quantum_length;
