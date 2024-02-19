@@ -49,7 +49,7 @@ class TestLab2(unittest.TestCase):
     def test_arrival_and_requeue(self):
             self.assertTrue(self.make, msg='make failed')
 
-            correctAvgWaitTime=(0, 5,    5.25,  6.5,   4.0,  4.5,  5.75,   4.75)
+            correctAvgWaitTime=(0, 5.0, 5.25,  6.5,   4.0,  4.5,  5.75,   4.75)
             correctAvgRespTime=(0, 0.75, 1.5,   2.25,  2.75, 3.25, 3.5,    4.75)
 
             #temp file for this case.
