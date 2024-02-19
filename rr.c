@@ -168,15 +168,12 @@ int main(int argc, char *argv[])
       if (data[i].arrival_time <= timer && data[i].arrival_time > (timer - quantum_length)){
         //printf("proc %d queued on or after %d\n",data[i].pid,timer);
         TAILQ_INSERT_TAIL(&list, &data[i], pointers);
-        struct process *current = TAILQ_HEAD(&list);
-        TAILQ_FOREACH(&list, current, pointers) {
-          printf("pid %d\n",list->pid)
-        }
-
+        printf("proc %d queued\n",data[i].pid);
       }
      
     }
     struct process *current = TAILQ_FIRST(&list);
+    printf("current pid %d\n",current->pid);
     TAILQ_REMOVE(&list, current, pointers);
     
     if(current->hit == false){
@@ -185,7 +182,7 @@ int main(int argc, char *argv[])
     }
 
     if (current->burst_time > quantum_length){
-      //printf("pid %d\n",current->pid);
+      printf("pid %d\n",current->pid);
       timer += quantum_length;
       //printf("timer %d\n",timer);
       current->burst_time -= quantum_length;
@@ -202,7 +199,9 @@ int main(int argc, char *argv[])
       //printf("num_processes %d\n",num_processes);    
 
     }
-
+    printf("num_processes %d\n",num_processes);
+    printf("timer %d\n",timer);
+    
     if (num_processes == 0){
       break;
     }
