@@ -18,7 +18,6 @@ struct process
   u32 arrival_time;
   u32 burst_time;
   bool hit;
-  bool queued;
   u32 net;
   TAILQ_ENTRY(process) pointers;
 };
@@ -158,7 +157,6 @@ int main(int argc, char *argv[])
 
   for(int i = 0; i < size; i++){
     data[i].hit = false;
-    data[i].queued = false;
     data[i].net = data[i].arrival_time + data[i].burst_time;
   }
 
@@ -168,28 +166,36 @@ int main(int argc, char *argv[])
     //implement a round robin scheduler
     for (int i = 0; i < size; i++){
       if (data[i].arrival_time < (timer + quantum_length)&& data[i].arrival_time >= timer ){
+        //printf("proc %d queued on or after %d\n",data[i].pid,timer);
         TAILQ_INSERT_TAIL(&list, &data[i], pointers);
-        data[i].queued = true;
       }
      
     }
     struct process *current = TAILQ_FIRST(&list);
     TAILQ_REMOVE(&list, current, pointers);
     
-    if (current->hit == false) {
+    if(current->hit == false){
       total_response_time += (timer - current->arrival_time);
       current->hit = true;
-    } 
+    }
 
     if (current->burst_time > quantum_length){
+      //printf("pid %d\n",current->pid);
       timer += quantum_length;
+      //printf("timer %d\n",timer);
       current->burst_time -= quantum_length;
+      //printf("burst time left %d\n",current->burst_time);
       TAILQ_INSERT_TAIL(&list, current, pointers);
     } else {
+      //printf("pid %d completed",current->pid);
       timer += current->burst_time;
+      //printf("timer %d\n",timer);
       int a = timer - current->net;
+      //printf("curr proc wait time %d\n",a);
       total_waiting_time += a;
       num_processes--;
+      //printf("num_processes %d\n",num_processes);    
+
     }
 
     if (num_processes == 0){
@@ -200,7 +206,7 @@ int main(int argc, char *argv[])
   /* End of "Your code here" */
 
   printf("Average waiting time: %.2f\n", (float)total_waiting_time / (float)size);
-  printf("Average response time: %.2f\n", (float)total_response_time / (float)size); 
+  printf("Average response time: %.2f\n", (float)total_response_time / (float)size); //WORKING!
   free(data);
   return 0;
 }
