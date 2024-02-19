@@ -19,6 +19,7 @@ struct process
   u32 burst_time;
   bool hit;
   u32 net;
+  bool queued;
   TAILQ_ENTRY(process) pointers;
 };
 
@@ -157,6 +158,7 @@ int main(int argc, char *argv[])
 
   for(int i = 0; i < size; i++){
     data[i].hit = false;
+    data[i].queued = false;
     data[i].net = data[i].arrival_time + data[i].burst_time;
   }
 
@@ -165,9 +167,9 @@ int main(int argc, char *argv[])
   while (true){
     //implement a round robin scheduler
     for (int i = 0; i < size; i++){
-      if (data[i].arrival_time <= timer && data[i].arrival_time > (timer - quantum_length)){
-        //printf("proc %d queued on or after %d\n",data[i].pid,timer);
+      if (data[i].arrival_time <= timer && data[i].queued == false){
         TAILQ_INSERT_TAIL(&list, &data[i], pointers);
+        data[i].queued = true;
         printf("proc %d queued\n",data[i].pid);
       }
      
@@ -201,7 +203,7 @@ int main(int argc, char *argv[])
     }
     printf("num_processes %d\n",num_processes);
     printf("timer %d\n",timer);
-    
+
     if (num_processes == 0){
       break;
     }
