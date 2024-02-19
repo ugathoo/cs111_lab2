@@ -188,8 +188,8 @@ int main(int argc, char *argv[])
       if (i != size-1){
         for(int j = 0; j < size; j++){
           if (data[j].arrival_time == timer || data[j].arrival_time < timer){
-            if(data[j].queue == false){
-              data[j].queue = true;
+            if(data[j].queued == false){
+              data[j].queued = true;
               TAILQ_INSERT_TAIL(&list, &data[j], pointers);
             }
           }
