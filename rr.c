@@ -18,6 +18,7 @@ struct process
   u32 arrival_time;
   u32 burst_time;
   bool hit;
+  bool queued;
   u32 net;
   TAILQ_ENTRY(process) pointers;
 };
@@ -157,6 +158,7 @@ int main(int argc, char *argv[])
 
   for(int i = 0; i < size; i++){
     data[i].hit = false;
+    data[i].queued = false;
     data[i].net = data[i].arrival_time + data[i].burst_time;
   }
 
@@ -168,6 +170,7 @@ int main(int argc, char *argv[])
       if (data[i].arrival_time < (timer + quantum_length)&& data[i].arrival_time >= timer ){
         //printf("proc %d queued on or after %d\n",data[i].pid,timer);
         TAILQ_INSERT_TAIL(&list, &data[i], pointers);
+        data[i].queued = true;
       }
      
     }
